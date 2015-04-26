@@ -5,8 +5,10 @@ static
 	loop: Level.tick, Graphics.tick;
 	end: Server.disconnect, Graphics.end();
 
-Server: 
-	begin: CarbonServer.;
+Networking: 
+	startServer: CarbonServer;
+	startClient: CarbonClient;
+	stopClient: CarbonClient.disconnect();
 
 Graphics: 
 static
