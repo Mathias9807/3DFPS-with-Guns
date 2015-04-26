@@ -1,9 +1,12 @@
 Main: 
 static
-	main: begin(), loop(), end();
+	main: ? Server.begin : begin(), loop(), end();
 	begin: Graphics.init(), Server.connect(), Level.init();
 	loop: Level.tick, Graphics.tick;
 	end: Server.disconnect, Graphics.end();
+
+Server: 
+	begin: CarbonServer.;
 
 Graphics: 
 static
