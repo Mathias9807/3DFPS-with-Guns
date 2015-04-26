@@ -1,0 +1,56 @@
+Main: 
+static
+	main: begin(), loop(), end();
+	begin: Graphics.init(), Server.connect(), Level.init();
+	loop: Level.tick, Graphics.tick;
+	end: Server.disconnect, Graphics.end();
+
+Graphics: 
+static
+	RenderEngine currentEngine;
+	init: createWindow, new RenderEngine(), Model.loadModels(), Texture.loadTextures();
+	tick: currentEngine.tick();
+	end: destroyWindow();
+
+RenderEngine:
+	new RenderEngine;
+	tick;
+
+Model: 
+	Model[] models;
+	loadModels;
+
+Texture: 
+	int[] textureIDs
+	loadTextures;
+
+Sound;
+
+Input;
+
+Level: 
+	Prop[] props;
+	Player mainPlayer;
+	Player[] otherPlayers;
+	init: TLFFLoader.load;
+	tick: checkForNewPlayers(), Player.tick(), sendInfo();
+
+TLFFLoader: 
+	load: new Model(), new Texture();
+
+Mesh: 
+	Model;
+	isInMesh(Point) return boolean;
+	hitscan(Origin, Direction) return boolean;
+
+Prop: 
+	Model;
+	Texture;
+	Mesh;
+	Position, Rotation;
+
+Player: 
+	Model;
+	Texture;
+	Mesh;
+	Position, Rotation;
