@@ -13,7 +13,8 @@ Networking:
 Graphics: 
 static
 	RenderEngine currentEngine;
-	init: createWindow, new RenderEngine(), Model.loadModels(), Texture.loadTextures();
+	init: createWindow, new RenderEngine(), Model.loadModels(), Texture.loadTextures(), 
+		Level.init(LevelFileName);
 	tick: currentEngine.tick();
 	end: destroyWindow();
 
@@ -36,8 +37,8 @@ Input;
 Level: 
 	Prop[] props;
 	Player mainPlayer;
-	Player[] otherPlayers;
-	init: TLFFLoader.load;
+	MPlayer[] otherPlayers;
+	init: TLFFLoader.load(LevelFileName);
 	tick: checkForNewPlayers(), Player.tick(), sendInfo();
 
 TLFFLoader: 
@@ -59,3 +60,10 @@ Player:
 	Texture;
 	Mesh;
 	Position, Rotation;
+
+MPlayer: 
+	Model;
+	Texture;
+	Mesh;
+	Position, Rotation;
+	tick;
