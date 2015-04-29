@@ -1,6 +1,7 @@
 package tremor;
 
 import tremor.graphics.Graphics;
+import tremor.level.Level;
 import carbon.CarbonClient;
 
 public class Main {
@@ -31,9 +32,11 @@ public class Main {
 	
 	private static void begin() {
 		Graphics.init();
+		Level.init(null);
 	}
 	
 	private static void loop() {
+		Level.tick(1);
 		Graphics.tick();
 	}
 	

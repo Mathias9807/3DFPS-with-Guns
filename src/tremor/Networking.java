@@ -17,6 +17,7 @@ public class Networking {
 		CarbonClient.updatesPerSecond = 0;
 		CarbonClient.useSystemInputStream = false;
 		CarbonClient.eventOnUpdate = () -> { updateClient(); };
+		
 		Main.client = new CarbonClient(ip);
 	}
 	
