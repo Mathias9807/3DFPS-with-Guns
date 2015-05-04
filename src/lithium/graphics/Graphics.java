@@ -1,4 +1,4 @@
-package tremor.graphics;
+package lithium.graphics;
 
 public class Graphics {
 	

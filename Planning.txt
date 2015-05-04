@@ -6,9 +6,15 @@ static
 	end: Server.disconnect, Graphics.end();
 
 Networking: 
+	MPlayer[] playerList;
 	startServer: CarbonServer;
 	startClient: CarbonClient;
 	stopClient: CarbonClient.disconnect();
+	serverAddClient: playerList.add(), serverSendClientInfo();
+	serverSendClientInfo(Label, Client): send(All data required);
+	serverRemoveClient: playerList.remove();
+	clientPlayerJoined: new MPlayer(Data);
+	clientPlayerUpdated: MPlayer.update(Data);
 
 Graphics: 
 static

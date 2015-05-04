@@ -1,7 +1,7 @@
-package tremor;
+package lithium;
 
-import tremor.graphics.Graphics;
-import tremor.level.Level;
+import lithium.graphics.Graphics;
+import lithium.level.Level;
 import carbon.CarbonClient;
 
 public class Main {
