@@ -4,10 +4,12 @@ import java.net.*;
 
 import carbonserver.HeaderData;
 
-public class MPlayer extends Player {
+public class MPlayer {
 	
 	public InetAddress 	clientAddress;
 	public int 			clientPort;
+	
+	public byte value;
 	
 	public MPlayer(HeaderData header, byte[] data) {
 		clientAddress 	= header.ip;

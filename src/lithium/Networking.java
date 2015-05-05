@@ -16,11 +16,11 @@ public class Networking {
 		CarbonServer.eventOnUpdate = (c) -> { updateServer(c); };
 		
 		CarbonServer.addHandler("CONN", (header, data) -> {
-			serverAddClient(header, data);
 			CarbonServer.handleConnectionRequest(header);
+			serverAddClient(header, data);
 		});
 		
-		CarbonServer.addHandler("DISC", (header, data) -> {
+		CarbonServer.addHandler("DSCN", (header, data) -> {
 			serverRemoveClient(header, data);
 			CarbonServer.handleDisconnect(header);
 		});
