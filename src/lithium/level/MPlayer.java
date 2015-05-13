@@ -1,19 +1,15 @@
 package lithium.level;
 
-import java.net.*;
-
-import carbonserver.HeaderData;
+import carbonserver.*;
 
 public class MPlayer {
 	
-	public InetAddress 	clientAddress;
-	public int 			clientPort;
+	public Client		client;
 	
 	public byte value;
 	
 	public MPlayer(HeaderData header, byte[] data) {
-		clientAddress 	= header.ip;
-		clientPort 		= header.port;
+		client			= new Client(header.ip, header.port);
 		value 			= data[0];
 	}
 	

@@ -37,6 +37,7 @@ public class Networking {
 		
 		CarbonClient.addHandler("JOIN", (header, data) -> { clientPlayerJoined(header, data); });
 		CarbonClient.addHandler("LEFT", (header, data) -> { clientPlayerLeft(header, data); });
+		CarbonClient.addHandler("DSCN", (header, data) -> { Main.client.disconnect(); });
 		
 		Main.client = new CarbonClient(ip);
 	}
@@ -47,32 +48,40 @@ public class Networking {
 	public static void updateClient() {
 	}
 	
-	private static void serverAddClient(HeaderData header, byte[] data) {
+	private static MPlayer serverAddClient(HeaderData header, byte[] data) {
 		MPlayer mp = new MPlayer(header, data);
+//		System.out.println(mp.client.getPort());
+		for (int i = 0; i < playerList.size(); i++) 
+			serverSendClientInfo("JOIN", mp, playerList.get(i).client);
+		for (int i = 0; i < playerList.size(); i++) 
+			serverSendClientInfo("JOIN", playerList.get(i), mp.client);
 		playerList.add(mp);
-		serverSendClientInfo("JOIN", mp);
+		return mp;
 	}
 	
-	private static void serverSendClientInfo(String label, MPlayer mp) {
+	private static void serverSendClientInfo(String label, MPlayer mp, Client target) {
 		CarbonServer.sendPacket(
-				new Client(mp.clientAddress, mp.clientPort), 
+				mp.client, target, 
 				label, mp.getData());
 	}
 
 	private static void serverRemoveClient(HeaderData header, byte[] data) {
+		MPlayer toRemove = null;
 		for (int i = 0; i < playerList.size(); i++) {
 			MPlayer mp = playerList.get(i);
-			if (mp.clientAddress.getHostAddress().equals(header.ip.getHostAddress()) 
-					&& mp.clientPort == header.port) {
-				serverSendClientInfo("LEFT", mp);
-				playerList.remove(i);
-				break;
-			}
+			if (mp.client.getIP().getHostAddress().equals(header.ip.getHostAddress()) 
+					&& mp.client.getPort() == header.port) {
+				toRemove = mp;
+			}else 
+				CarbonServer.sendPacket(new Client(header.ip, header.port), 
+						mp.client, "LEFT", null);
 		}
+		playerList.remove(toRemove);
 	}
 	
 	private static void clientPlayerJoined(HeaderData header, byte[] data) {
 		Level.addMPlayer(header, data);
+//		System.out.println(header.port + " joined");
 	}
 	
 	private static void clientPlayerLeft(HeaderData header, byte[] data) {

@@ -23,8 +23,8 @@ public class Level {
 
 	public static void removeMPlayer(HeaderData header, byte[] data) {
 		for (int i = 0; i < otherPlayers.size(); i++) {
-			if (otherPlayers.get(i).clientAddress.getAddress().equals(header.ip.getAddress()) 
-					&& otherPlayers.get(i).clientPort == header.port) {
+			if (otherPlayers.get(i).client.getIP().getAddress().equals(header.ip.getAddress()) 
+					&& otherPlayers.get(i).client.getPort() == header.port) {
 				otherPlayers.remove(i);
 				
 				break;
