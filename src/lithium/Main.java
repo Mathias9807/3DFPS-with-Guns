@@ -36,8 +36,15 @@ public class Main {
 	}
 	
 	private static void loop() {
-		Level.tick(1);
-		Graphics.tick();
+		while (true) {
+			Level.tick(1);
+			Graphics.tick();
+			
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+			}
+		}
 	}
 	
 	private static void end() {

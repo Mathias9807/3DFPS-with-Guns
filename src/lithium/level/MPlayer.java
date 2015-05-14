@@ -10,7 +10,7 @@ public class MPlayer {
 	
 	public MPlayer(HeaderData header, byte[] data) {
 		client			= new Client(header.ip, header.port);
-		value 			= data[0];
+		retrieveData(data);
 	}
 	
 	public byte[] getData() {
@@ -19,6 +19,7 @@ public class MPlayer {
 	}
 	
 	public void retrieveData(byte[] data) {
+		if (data == null) return;
 		value = data[0];
 	}
 	

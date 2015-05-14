@@ -8,28 +8,34 @@ public class Level {
 	
 	public static Prop[] props;
 	public static Player mainPlayer;
-	public static List<MPlayer> otherPlayers = new ArrayList<MPlayer>();
+	public static List<MPlayer> playerList = new ArrayList<MPlayer>();
 	
 	public static void init(String levelFile) {
 	}
 	
 	public static void tick(double delta) {
+		mainPlayer.tick(delta);
+		
+		for (int i = 0; i < playerList.size(); i++) 
+			System.out.print(playerList.get(i).value + ", ");
+		System.out.println(mainPlayer.value);
 	}
 	
-	public static void addMPlayer(HeaderData header, byte[] data) {
-		MPlayer mp = new MPlayer(header, data);
-		otherPlayers.add(mp);
-	}
-
-	public static void removeMPlayer(HeaderData header, byte[] data) {
-		for (int i = 0; i < otherPlayers.size(); i++) {
-			if (otherPlayers.get(i).client.getIP().getAddress().equals(header.ip.getAddress()) 
-					&& otherPlayers.get(i).client.getPort() == header.port) {
-				otherPlayers.remove(i);
-				
-				break;
+	public static void tickMPlayer(HeaderData header, byte[] data) {
+		for (int i = 0; i < playerList.size(); i++) {
+			if (playerList.get(i).client.getIP().getAddress().equals(header.ip.getAddress()) 
+					&& playerList.get(i).client.getPort() == header.port) {
+				playerList.get(i).retrieveData(data);
 			}
 		}
+	}
+	
+	public static void addMPlayer(MPlayer mp) {
+		playerList.add(mp);
+	}
+
+	public static void removeMPlayer(MPlayer mp) {
+		playerList.remove(mp);
 	}
 	
 }
