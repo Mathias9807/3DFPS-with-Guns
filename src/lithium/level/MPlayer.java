@@ -5,11 +5,13 @@ import carbonserver.*;
 public class MPlayer {
 	
 	public Client		client;
+	public int			modelIndex;
 	
 	public byte value;
 	
 	public MPlayer(HeaderData header, byte[] data) {
 		client			= new Client(header.ip, header.port);
+		modelIndex 		= 0;
 		retrieveData(data);
 	}
 	

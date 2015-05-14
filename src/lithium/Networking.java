@@ -10,7 +10,7 @@ import carbonserver.*;
 public class Networking {
 	
 	public static void startServer() {
-		CarbonServer.updatesPerSecond = 1;
+		CarbonServer.updatesPerSecond = 10;
 		CarbonServer.useSystemInputStream = true;
 		CarbonServer.eventOnUpdate = (c) -> { updateServer(c); };
 		
@@ -33,7 +33,7 @@ public class Networking {
 	}
 
 	public static void startClient(String ip) {
-		CarbonClient.updatesPerSecond = 1;
+		CarbonClient.updatesPerSecond = 15;
 		CarbonClient.useSystemInputStream = false;
 		CarbonClient.eventOnUpdate = () -> { updateClient(); };
 		

@@ -1,5 +1,7 @@
 package lithium;
 
+import org.lwjgl.Sys;
+
 import lithium.graphics.Graphics;
 import lithium.level.Level;
 import carbon.CarbonClient;
@@ -7,6 +9,8 @@ import carbon.CarbonClient;
 public class Main {
 	
 	public static CarbonClient client;
+	
+	public static boolean running = true;
 
 	public static void main(String[] args) {
 		if (args.length != 1) {
@@ -19,9 +23,9 @@ public class Main {
 			return;
 		}
 		
-		Networking.startClient(args[0]);
-		
 		begin();
+		
+		Networking.startClient(args[0]);
 		
 		loop();
 		
@@ -36,18 +40,21 @@ public class Main {
 	}
 	
 	private static void loop() {
-		while (true) {
-			Level.tick(1);
-			Graphics.tick();
+		double now = (double) Sys.getTime() / Sys.getTimerResolution();
+		double past = now;
+		double delta;
+		while (running) {
+			now = (double) Sys.getTime() / Sys.getTimerResolution();
+			delta = now - past;
+			past = now;
 			
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-			}
+			Level.tick(delta);
+			Graphics.tick();
 		}
 	}
 	
 	private static void end() {
+		Graphics.end();
 	}
 
 }

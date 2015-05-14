@@ -4,5 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="Carbon.jar" sourcepath="/Carbon/src"/>
 	<classpathentry kind="lib" path="lwjgl.jar"/>
+	<classpathentry kind="lib" path="lwjgl_util.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

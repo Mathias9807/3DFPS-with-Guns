@@ -1,6 +1,5 @@
 Short-term: 
-	Make the server send the list of currently connected clients to connecting clients. 
-	Make the server send updates about other clients. 
+	Add basic graphics. 
 
 Long-term: 
 	Implement file loader. 
