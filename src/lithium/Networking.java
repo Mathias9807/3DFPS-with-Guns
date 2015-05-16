@@ -100,6 +100,19 @@ public class Networking {
 	}
 	
 	private static void clientPlayerJoined(HeaderData header, byte[] data) {
+		MPlayer join = new MPlayer(header, data);
+		
+		if (header.ip.getHostAddress()
+				.equals(CarbonClient.client.connectedIP.getHostAddress()) 
+				&& header.port == CarbonClient.client.socket.getLocalPort()) 
+			return;
+		
+		for (int i = 0; i < playerList.size(); i++) {
+			if (join.client.getIP().getHostAddress()
+					.equals(playerList.get(i).client.getIP().getHostAddress()) 
+					&& join.client.getPort() == playerList.get(i).client.getPort()) 
+				return;
+		}
 		Level.addMPlayer(new MPlayer(header, data));
 		System.out.println("CLIENT: Player " + header.ip + "::" + header.port + " joined");
 	}

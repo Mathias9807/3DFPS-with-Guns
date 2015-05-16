@@ -15,6 +15,9 @@ public class Level {
 	
 	public static void tick(double delta) {
 		mainPlayer.tick(delta);
+
+		for (int i = 0; i < playerList.size(); i++) 
+			playerList.get(i).tick(delta);
 	}
 	
 	public static void tickMPlayer(HeaderData header, byte[] data) {

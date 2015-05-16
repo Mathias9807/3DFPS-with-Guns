@@ -1,7 +1,7 @@
 package lithium;
 
 import org.lwjgl.*;
-import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.*;
 
 import lithium.graphics.Graphics;
 import lithium.level.Level;
@@ -33,6 +33,8 @@ public class Main {
 		end();
 		
 		Networking.stopClient();
+		
+		System.exit(0);
 	}
 	
 	private static void begin() {
@@ -41,8 +43,9 @@ public class Main {
 		
 		try {
 			Keyboard.create();
+			Mouse.create();
 		} catch (LWJGLException e) {
-			System.err.println("Failed to initialize keyboard. ");
+			System.err.println("Failed to initialize keyboard and mouse. ");
 		}
 	}
 	
@@ -62,6 +65,8 @@ public class Main {
 	
 	private static void end() {
 		Graphics.end();
+		Keyboard.destroy();
+		Mouse.destroy();
 	}
 
 }
