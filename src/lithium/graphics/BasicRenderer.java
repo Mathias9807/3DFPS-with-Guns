@@ -40,10 +40,14 @@ public class BasicRenderer implements RenderEngine {
 		setShader(shaderBasic);
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
 		
+		matView.setIdentity();
+		matView.translate(Level.mainPlayer.pos.negate(null));
+		useMatrix(matView, "matView");
+		
 		for (int i = 0; i < Level.playerList.size(); i++) {
 			MPlayer mp = Level.playerList.get(i);
 			matModel.setIdentity();
-			matModel.translate(new Vector3f(0, 0, -mp.value));
+			matModel.translate(mp.pos);
 			useMatrix(matModel, "matModel");
 			Graphics.VAOArray[mp.modelIndex].render();
 		}

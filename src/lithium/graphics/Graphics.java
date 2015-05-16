@@ -37,7 +37,7 @@ public class Graphics {
 		rEngine.tick();
 		
 		Display.update();
-		Display.sync(10);
+		Display.sync(30);
 		
 		String error = GLU.gluErrorString(GL11.glGetError());
 		if (error != "No error") System.out.println(error);

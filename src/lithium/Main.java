@@ -1,6 +1,7 @@
 package lithium;
 
-import org.lwjgl.Sys;
+import org.lwjgl.*;
+import org.lwjgl.input.Keyboard;
 
 import lithium.graphics.Graphics;
 import lithium.level.Level;
@@ -37,6 +38,12 @@ public class Main {
 	private static void begin() {
 		Graphics.init();
 		Level.init(null);
+		
+		try {
+			Keyboard.create();
+		} catch (LWJGLException e) {
+			System.err.println("Failed to initialize keyboard. ");
+		}
 	}
 	
 	private static void loop() {

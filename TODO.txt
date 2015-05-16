@@ -1,7 +1,8 @@
 Short-term: 
-	Add basic graphics. 
+	Add controls. 
 
 Long-term: 
 	Implement file loader. 
-	Add graphics. 
+	Improve graphics. 
 	Complete level functionality. 
+	Add PVP. 
