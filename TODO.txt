@@ -1,8 +1,10 @@
 Short-term: 
 	Add props. 
+	Add the BOL file system used in my 'World' project. Design Lithium's file tree. 
 
 Long-term: 
 	Implement file loader. 
 	Improve graphics. 
 	Complete level functionality. 
 	Add PVP. 
+	Add GUI with menus for joining and creating servers. 

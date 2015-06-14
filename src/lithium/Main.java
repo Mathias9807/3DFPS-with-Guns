@@ -12,14 +12,18 @@ public class Main {
 	public static CarbonClient client;
 	
 	public static boolean running = true;
+	
+	public static String[] args;
 
 	public static void main(String[] args) {
-		if (args.length != 1) {
-			System.out.println("Usage: [program] [IPv4 address] | [-server]");
+		Main.args = args;
+		
+		if (args.length == 0) {
+			System.out.println("Usage: [program] [options] [IPv4 address] | [-server]");
 			System.exit(0);
 		}
 		
-		if (args[0].equals("-server")) {
+		if (hasParameter("-server")) {
 			Networking.startServer();
 			return;
 		}
@@ -67,6 +71,13 @@ public class Main {
 		Graphics.end();
 		Keyboard.destroy();
 		Mouse.destroy();
+	}
+	
+	public static boolean hasParameter(String param) {
+		for (String a : args) 
+			if (a.equals(param))
+				return true;
+		return false;
 	}
 
 }
