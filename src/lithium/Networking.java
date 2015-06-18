@@ -60,9 +60,7 @@ public class Networking {
 	public static void updateClient() {
 		try {
 			if (Level.mainPlayer != null) 
-				CarbonClient
-				.client
-				.sendPacket("INFO", 
+				CarbonClient.client.sendPacket("INFO", 
 						Level.mainPlayer.getData());
 		} catch (UnknownHostException e) {
 			e.printStackTrace();

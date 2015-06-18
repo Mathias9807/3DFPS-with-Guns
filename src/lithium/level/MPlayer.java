@@ -1,10 +1,10 @@
 package lithium.level;
 
-import java.util.Arrays;
+import static carbon.CarbonClient.addArrays;
+import lithium.Main;
 
 import org.lwjgl.util.vector.Vector3f;
 
-import static carbon.CarbonClient.addArrays;
 import carbonserver.*;
 
 public class MPlayer {
@@ -14,12 +14,15 @@ public class MPlayer {
 	
 	public Vector3f 	pos, vel, rot;
 	
+	public double 		lastUpdate;
+	
 	public MPlayer(HeaderData header, byte[] data) {
 		client			= new Client(header.ip, header.port);
 		modelIndex 		= 0;
 		pos 			= new Vector3f();
 		vel 			= new Vector3f();
 		rot 			= new Vector3f();
+		lastUpdate		= 0.0;
 		retrieveData(data);
 	}
 	
@@ -31,7 +34,8 @@ public class MPlayer {
 	
 	public byte[] getData() {
 		byte[] sum;
-		sum = addArrays(getByteArray(pos.x), getByteArray(pos.y));
+		sum = addArrays(getByteArray(Main.time), getByteArray(pos.x));
+		sum = addArrays(sum, getByteArray(pos.y));
 		sum = addArrays(sum, getByteArray(pos.z));
 		sum = addArrays(sum, getByteArray(rot.x));
 		sum = addArrays(sum, getByteArray(rot.y));
@@ -44,23 +48,38 @@ public class MPlayer {
 	
 	public void retrieveData(byte[] data) {
 		if (data == null) return;
-		pos.x = getFloat(Arrays.copyOfRange(data, 0, 4));
-		pos.y = getFloat(Arrays.copyOfRange(data, 4, 8));
-		pos.z = getFloat(Arrays.copyOfRange(data, 8, 12));
-		rot.x = getFloat(Arrays.copyOfRange(data, 12, 16));
-		rot.y = getFloat(Arrays.copyOfRange(data, 16, 20));
-		rot.z = getFloat(Arrays.copyOfRange(data, 20, 24));
-		vel.x = getFloat(Arrays.copyOfRange(data, 24, 28));
-		vel.y = getFloat(Arrays.copyOfRange(data, 28, 32));
-		vel.z = getFloat(Arrays.copyOfRange(data, 32, 36));
+		int index = 0;
+		double newUpdate = getDouble(data, index); index += 8;
+		if (newUpdate < lastUpdate) {
+			System.out.println("Packets arrived in wrong order. ");
+			return;
+		}
+		lastUpdate = newUpdate;
+		pos.x = getFloat(data, index); index += 4;
+		pos.y = getFloat(data, index); index += 4;
+		pos.z = getFloat(data, index); index += 4;
+		rot.x = getFloat(data, index); index += 4;
+		rot.y = getFloat(data, index); index += 4;
+		rot.z = getFloat(data, index); index += 4;
+		vel.x = getFloat(data, index); index += 4;
+		vel.y = getFloat(data, index); index += 4;
+		vel.z = getFloat(data, index); index += 4;
 	}
 	
 	public static byte[] getByteArray(float f) {
 		return java.nio.ByteBuffer.allocate(Float.BYTES).putFloat(f).array();
 	}
 	
-	public static float getFloat(byte[] b) {
-		return java.nio.ByteBuffer.allocate(Float.BYTES).put(b).getFloat(0);
+	public static float getFloat(byte[] b, int offs) {
+		return java.nio.ByteBuffer.allocate(b.length).put(b).getFloat(offs);
+	}
+	
+	public static byte[] getByteArray(double d) {
+		return java.nio.ByteBuffer.allocate(Double.BYTES).putDouble(d).array();
+	}
+	
+	public static double getDouble(byte[] b, int offs) {
+		return java.nio.ByteBuffer.allocate(b.length).put(b).getDouble(offs);
 	}
 	
 }

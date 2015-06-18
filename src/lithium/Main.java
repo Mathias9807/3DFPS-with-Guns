@@ -13,6 +13,8 @@ public class Main {
 	
 	public static boolean running = true;
 	
+	public static double time = 0;
+	
 	public static String[] args;
 
 	public static void main(String[] args) {
@@ -62,6 +64,7 @@ public class Main {
 			delta = now - past;
 			past = now;
 			
+			time += delta;
 			Level.tick(delta);
 			Graphics.tick();
 		}
